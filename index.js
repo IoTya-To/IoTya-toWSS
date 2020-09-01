@@ -9,10 +9,10 @@ io.sockets.on('connection', (socket) => {
         socket.join(roomname)
         socket.emit('ServerMessage', 'you joined ' + roomname)
     })
-    socket.on('rm', (arg) => {
-        const args = arg.split(',')
-        io.to(args[0]).emit('ServerMessage', 'roomMassage : ' + args[1])
+    socket.on('pushData',(data)=>{
+        socket.to(data.room).broadcast.emit(data.data)
     })
+
     socket.on('disconnect', (reason) => {
         console.log(socket.id + ' disconnect : ' + reason)
     })
